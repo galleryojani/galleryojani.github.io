@@ -20,11 +20,11 @@ body {
   top: 0;
   z-index: 100;
   background: #ffffff;
-  padding: 18px 5%;
+  padding: 14px 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 15px;
+  gap: 12px;
   border-bottom: 1px solid #ddd;
 }
 
@@ -51,10 +51,10 @@ body {
 .btn {
   border: 0;
   border-radius: 14px;
-  padding: 13px 20px;
+  padding: 12px 18px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .btn.primary {
@@ -66,53 +66,69 @@ body {
   width: 100%;
 }
 
-/* بخش اصلی */
+/* محتوای اصلی */
 main {
-  width: min(1200px, 92%);
+  width: min(1100px, 92%);
   margin: 0 auto;
 }
 
+/* بخش معرفی */
 .hero {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 30px;
-  padding: 50px 0;
+  padding: 40px 0;
 }
 
 .hero h1 {
-  font-size: 48px;
+  font-size: 42px;
   margin: 0 0 15px;
 }
 
 .hero-image {
-  width: 360px;
+  width: 320px;
   max-width: 100%;
-  border-radius: 25px;
+  border-radius: 22px;
   object-fit: cover;
 }
 
-/* عنوان بخش */
+/* عنوان محصولات */
 .section-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 30px 0;
+  margin: 25px 0;
 }
 
-/* محصولات
-/* اسلایدر عکس محصول */
-.product-images {
-  position: relative;
+/* محصولات */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 380px));
+  justify-content: center;
+  gap: 25px;
+}
+
+.product-card {
   width: 100%;
-  max-width: 430px;
-  margin: 0 auto;
-  overflow-x: auto;
+  max-width: 380px;
+  background: #ffffff;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* اسلایدر عکس‌ها */
+.product-images {
+  width: 100%;
   display: flex !important;
-  gap: 0 !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
   scroll-snap-type: x mandatory;
-  border-radius: 18px;
+  scroll-behavior: smooth;
   scrollbar-width: none;
+  direction: ltr;
 }
 
 .product-images::-webkit-scrollbar {
@@ -121,20 +137,168 @@ main {
 
 .product-images img {
   display: block !important;
+  flex: 0 0 100% !important;
   min-width: 100% !important;
   width: 100% !important;
-  height: 430px !important;
+  height: 390px !important;
   object-fit: cover !important;
-  scroll-snap-align: center;
-  border-radius: 18px !important;
+  object-position: center;
+  scroll-snap-align: start;
 }
 
-@media (max-width: 600px) {
-  .product-images {
+/* مشخصات محصول */
+.product-info {
+  padding: 18px;
+  text-align: right;
+}
+
+.product-info h3 {
+  margin: 0 0 12px;
+  font-size: 21px;
+}
+
+.product-info p {
+  margin: 7px 0;
+  line-height: 1.8;
+}
+
+.product-price {
+  display: block;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 14px 0;
+}
+
+/* تماس */
+.contact-card {
+  background: #ffffff;
+  margin: 35px 0;
+  padding: 25px;
+  border-radius: 22px;
+}
+
+/* فوتر */
+footer {
+  text-align: center;
+  padding: 25px;
+}
+
+/* سبد خرید */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: min(400px, 90%);
+  height: 100%;
+  background: #ffffff;
+  z-index: 1000;
+  padding: 25px;
+  transition: 0.3s;
+  overflow-y: auto;
+}
+
+.cart-drawer.open {
+  right: 0;
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-header button {
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+}
+
+.cart-items {
+  margin: 25px 0;
+}
+
+.cart-footer {
+  margin-top: 25px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 900;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111111;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  display: none;
+  z-index: 2000;
+}
+
+/* موبایل */
+@media (max-width: 700px) {
+  .nav {
+    display: none;
+  }
+
+  main {
+    width: 94%;
+  }
+
+  .hero {
+    flex-direction: column-reverse;
+    padding: 25px 0;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero-image {
+    width: 240px;
+  }
+
+  .section-head {
+    display: block;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 340px);
+    justify-content: center;
+  }
+
+  .product-card {
     max-width: 340px;
   }
 
+  .product-images {
+    width: 100%;
+  }
+
   .product-images img {
-    height: 400px !important;
+    height: 360px !important;
+  }
+
+  .product-info {
+    padding: 16px;
   }
 }
