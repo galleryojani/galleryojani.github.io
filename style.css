@@ -302,3 +302,23 @@ footer {
     padding: 16px;
   }
 }
+/* اصلاح نهایی عکس اسلایدر */
+.slider {
+  width: 280px !important;
+  max-width: 85vw !important;
+  height: auto !important;
+  margin: 20px auto !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.slider #productSlide {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
