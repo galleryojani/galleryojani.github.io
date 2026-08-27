@@ -16,58 +16,104 @@ const products = [
 ];
 
 let cart = [];
+let currentSlide = 0;
 
 const productsGrid = document.getElementById("productsGrid");
 
 function renderProducts() {
   if (!productsGrid) return;
 
-  productsGrid.innerHTML = products.map(product => `
+  const product = products[0];
+
+  productsGrid.innerHTML = `
     <article class="product-card">
 
-      <div class="product-images">
-        ${product.images.map((image, index) => `
-          <img
-            src="${image}"
-            alt="${product.name} ${index + 1}"
-            loading="lazy"
-          >
-        `).join("")}
+      <div class="slider">
+
+        <button class="slide-btn prev" onclick="changeSlide(-1)">
+          ❮
+        </button>
+
+        <img
+          id="productSlide"
+          src="${product.images[0]}"
+          alt="${product.name}"
+        >
+
+        <button class="slide-btn next" onclick="changeSlide(1)">
+          ❯
+        </button>
+
+        <div class="slide-counter">
+          <span id="slideNumber">1</span> / ${product.images.length}
+        </div>
+
       </div>
 
       <div class="product-info">
         <h3>${product.name}</h3>
+
         <p>پارچه: ${product.fabric}</p>
         <p>${product.size}</p>
         <p>${product.colors}</p>
 
-        <h3>${product.price.toLocaleString("fa-IR")} تومان</h3>
+        <strong class="product-price">
+          ${product.price.toLocaleString("fa-IR")} تومان
+        </strong>
 
         <p>${product.description}</p>
 
-        <button class="btn primary" onclick="addToCart(${product.id})">
+        <button
+          class="btn primary"
+          onclick="addToCart(${product.id})"
+        >
           افزودن به سبد خرید
         </button>
       </div>
 
     </article>
-  `).join("");
+  `;
+}
+
+function changeSlide(direction) {
+  const product = products[0];
+
+  currentSlide += direction;
+
+  if (currentSlide >= product.images.length) {
+    currentSlide = 0;
+  }
+
+  if (currentSlide < 0) {
+    currentSlide = product.images.length - 1;
+  }
+
+  const image = document.getElementById("productSlide");
+  const number = document.getElementById("slideNumber");
+
+  if (image) {
+    image.src = product.images[currentSlide];
+  }
+
+  if (number) {
+    number.textContent = currentSlide + 1;
+  }
 }
 
 function addToCart(id) {
   const product = products.find(p => p.id === id);
 
-  if (product) {
-    cart.push(product);
+  if (!product) return;
 
-    const cartCount = document.getElementById("cartCount");
+  cart.push(product);
 
-    if (cartCount) {
-      cartCount.textContent = cart.length;
-    }
+  const cartCount = document.getElementById("cartCount");
 
-    alert("محصول به سبد خرید اضافه شد");
+  if (cartCount) {
+    cartCount.textContent = cart.length;
   }
+
+  alert("محصول به سبد خرید اضافه شد");
 }
 
 const year = document.getElementById("year");
