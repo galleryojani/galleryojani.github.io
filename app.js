@@ -1,141 +1,106 @@
-const products = [
-  {
-    id: 1,
-    name: "شومیز جلو گره کادنزا",
-    price: 518000,
-    fabric: "کادنزا",
-    size: "قواره ریز",
-    colors: "۷ رنگ",
-    description: "قیمت عالی، اقتصادی و استثنایی",
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAXaVq_c8oY8p8nLCe8e-LOZDr",
+  authDomain: "galleryojani.firebaseapp.com",
+  projectId: "galleryojani",
+  storageBucket: "galleryojani.firebasestorage.app",
+  messagingSenderId: "832359324955",
+  appId: "1:832359324955:web:f4b9c1cff41db73c16c7be",
+  measurementId: "G-57N46F2QTZ"
+};
 
-    images: [
-      "IMG_20260827_110741_965.jpg",
-      "IMG_20260827_110741_127.jpg",
-      "IMG_20260827_110741_937.jpg"
-    ]
-  }
-];
+// اتصال به Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
+let products = [];
 let currentSlide = 0;
 let cart = [];
 
-const productsGrid =
-  document.getElementById("productsGrid");
+// دریافت محصولات از Firestore
+async function loadProducts() {
+  try {
+    const snapshot = await db.collection("products").get();
 
+    products = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    console.log("Products loaded:", products);
+
+    renderProduct();
+
+  } catch (error) {
+    console.error("Error loading products:", error);
+
+    const grid = document.getElementById("productsGrid");
+
+    if (grid) {
+      grid.innerHTML =
+        "<p>خطا در دریافت محصولات از فروشگاه</p>";
+    }
+  }
+}
+
+
+// نمایش محصول
 function renderProduct() {
+
+  const productsGrid =
+    document.getElementById("productsGrid");
+
+  if (!productsGrid) return;
+
+  if (products.length === 0) {
+
+    productsGrid.innerHTML =
+      "<p>هنوز محصولی ثبت نشده است.</p>";
+
+    return;
+  }
 
   const product = products[0];
 
+  const image =
+    product.Image ||
+    product.image ||
+    "";
+
+  const name =
+    product.name ||
+    "محصول";
+
+  const price =
+    Number(product.Price || product.price || 0);
+
+
   productsGrid.innerHTML = `
+
     <article class="product-card">
 
       <div class="slider">
 
-        <button
-          class="slide-btn prev"
-          onclick="changeSlide(-1)">
-          ❮
-        </button>
-
         <img
           id="productSlide"
-          src="${product.images[0]}"
-          alt="${product.name}"
+          src="${image}"
+          alt="${name}"
         >
-
-        <button
-          class="slide-btn next"
-          onclick="changeSlide(1)">
-          ❯
-        </button>
-
-        <div class="slide-counter">
-          <span id="slideNumber">1</span>
-          /
-          ${product.images.length}
-        </div>
 
       </div>
 
 
       <div class="product-info">
 
-        <h3>${product.name}</h3>
-
-        <p>پارچه: ${product.fabric}</p>
-
-        <p>${product.size}</p>
-
-        <p>${product.colors}</p>
+        <h3>${name}</h3>
 
         <strong class="product-price">
-          ${product.price.toLocaleString("fa-IR")}
+          ${price.toLocaleString("fa-IR")}
           تومان
         </strong>
 
-        <p>${product.description}</p>
-
         <button
           class="btn primary"
-          onclick="addToCart(${product.id})">
-          افزودن به سبد خرید
-        </button>
-
-      </div>
-
-    </article>
-  `;
-}
-
-
-function changeSlide(direction) {
-
-  const product = products[0];
-
-  currentSlide += direction;
-
-  if (currentSlide >= product.images.length) {
-    currentSlide = 0;
-  }
-
-  if (currentSlide < 0) {
-    currentSlide =
-      product.images.length - 1;
-  }
-
-  document.getElementById("productSlide").src =
-    product.images[currentSlide];
-
-  document.getElementById("slideNumber").textContent =
-    currentSlide + 1;
-}
-
-
-function addToCart(id) {
-
-  const product =
-    products.find(item => item.id === id);
-
-  if (!product) return;
-
-  cart.push(product);
-
-  const count =
-    document.getElementById("cartCount");
-
-  if (count) {
-    count.textContent =
-      cart.length.toLocaleString("fa-IR");
-  }
-}
-
-
-const year =
-  document.getElementById("year");
-
-if (year) {
-  year.textContent =
-    new Date().getFullYear();
-}
-
-renderProduct();
+          onclick="addToCart('${product.id}')"
+        >
+          افزودن به
