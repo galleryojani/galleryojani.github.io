@@ -10,6 +10,7 @@
 <body>
 
 <header class="header">
+
   <div class="logo">
     <span>✦</span>
     GALLERY OJANI
@@ -21,10 +22,24 @@
     <a href="#about">درباره ما</a>
   </nav>
 
-  <button class="cart-button">
-    سبد خرید
-    <span id="cartCount">۰</span>
-  </button>
+  <div class="header-actions">
+
+    <button
+      type="button"
+      class="account-button"
+      id="accountButton">
+      ورود / ثبت‌نام
+    </button>
+
+    <button
+      type="button"
+      class="cart-button">
+      سبد خرید
+      <span id="cartCount">۰</span>
+    </button>
+
+  </div>
+
 </header>
 
 
@@ -32,21 +47,38 @@
 
   <div class="luxury-logo">
     <div class="star">✦</div>
-    <h1>GALLERY<br>OJANI</h1>
-    <p>STYLE • QUALITY • ELEGANCE</p>
+
+    <h1>
+      GALLERY<br>
+      OJANI
+    </h1>
+
+    <p>
+      STYLE • QUALITY • ELEGANCE
+    </p>
   </div>
 
+
   <div class="hero-text">
+
     <span>COLLECTION 2026</span>
-    <h2>استایل خاص،<br>برای انتخاب‌های خاص</h2>
+
+    <h2>
+      استایل خاص،<br>
+      برای انتخاب‌های خاص
+    </h2>
+
     <p>
       مجموعه‌ای از لباس‌های شیک و خاص
       با قیمت اقتصادی
     </p>
 
-    <a href="#products" class="main-button">
+    <a
+      href="#products"
+      class="main-button">
       مشاهده محصولات
     </a>
+
   </div>
 
 </section>
@@ -54,11 +86,18 @@
 
 <main>
 
-<section id="products" class="products-section">
+<section
+  id="products"
+  class="products-section">
 
   <div class="section-title">
-    <span>OUR COLLECTION</span>
+
+    <span>
+      OUR COLLECTION
+    </span>
+
     <h2>محصولات</h2>
+
   </div>
 
   <div id="productsGrid"></div>
@@ -66,11 +105,17 @@
 </section>
 
 
-<section id="about" class="about">
+<section
+  id="about"
+  class="about">
 
-  <span>✦ GALLERY OJANI ✦</span>
+  <span>
+    ✦ GALLERY OJANI ✦
+  </span>
 
-  <h2>استایل، کیفیت و انتخاب متفاوت</h2>
+  <h2>
+    استایل، کیفیت و انتخاب متفاوت
+  </h2>
 
   <p>
     در گالری اوجانی تلاش می‌کنیم
@@ -84,12 +129,145 @@
 
 
 <footer>
-  <strong>GALLERY OJANI</strong>
-  <p>تمامی حقوق محفوظ است © <span id="year"></span></p>
+
+  <strong>
+    GALLERY OJANI
+  </strong>
+
+  <p>
+    تمامی حقوق محفوظ است ©
+    <span id="year"></span>
+  </p>
+
 </footer>
+
+
+<!-- پنجره ورود و ثبت‌نام -->
+
+<div
+  class="account-overlay"
+  id="accountOverlay">
+
+  <div class="account-modal">
+
+    <button
+      type="button"
+      class="account-close"
+      id="accountClose">
+      ×
+    </button>
+
+    <div class="account-logo">
+      ✦ GALLERY OJANI ✦
+    </div>
+
+    <h2>
+      ایجاد حساب کاربری
+    </h2>
+
+    <p class="account-description">
+      برای ثبت سفارش، اطلاعات خود را وارد کنید.
+    </p>
+
+
+    <form id="registerForm">
+
+      <div class="account-row">
+
+        <div class="account-field">
+          <label for="firstName">
+            نام
+          </label>
+
+          <input
+            id="firstName"
+            type="text"
+            required>
+        </div>
+
+
+        <div class="account-field">
+          <label for="lastName">
+            نام خانوادگی
+          </label>
+
+          <input
+            id="lastName"
+            type="text"
+            required>
+        </div>
+
+      </div>
+
+
+      <div class="account-field">
+
+        <label for="phone">
+          شماره تماس
+        </label>
+
+        <input
+          id="phone"
+          type="tel"
+          inputmode="tel"
+          required>
+
+      </div>
+
+
+      <div class="account-field">
+
+        <label for="email">
+          ایمیل
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          required>
+
+      </div>
+
+
+      <div class="account-field">
+
+        <label for="password">
+          رمز عبور
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          autocomplete="new-password"
+          minlength="6"
+          required>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="register-button">
+
+        ساخت حساب
+
+      </button>
+
+
+      <p
+        class="account-message"
+        id="accountMessage">
+      </p>
+
+    </form>
+
+  </div>
+
+</div>
 
 
 <script src="app.js"></script>
 
 </body>
-</html>   
+</html>
