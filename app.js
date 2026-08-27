@@ -6,12 +6,7 @@ const products = [
     fabric: "کادنزا",
     size: "قواره ریز",
     colors: "۷ رنگ",
-    description: "قیمت عالی، اقتصادی و استثنایی",
-    images: [
-      "IMG_20260827_110741_965.jpg",
-      "IMG_20260827_110741_127.jpg",
-      "IMG_20260827_110741_937.jpg"
-    ]
+    image: "IMG_20260827_110741_965.jpg"
   }
 ];
 
@@ -19,41 +14,29 @@ let cart = [];
 
 const productsGrid = document.getElementById("productsGrid");
 
-function renderProducts() {
-  if (!productsGrid) return;
-
-  productsGrid.innerHTML = products.map(product => `
+if (productsGrid) {
+  productsGrid.innerHTML = `
     <article class="product-card">
-      <div class="product-images">
-        ${product.images.map((image, index) => `
-          <img
-            src="${image}"
-            alt="${product.name} ${index + 1}"
-            loading="lazy"
-          >
-        `).join("")}
-      </div>
+      <img
+        src="${products[0].image}"
+        alt="${products[0].name}"
+        style="width:100%;border-radius:16px;"
+      >
 
       <div class="product-info">
-        <h3>${product.name}</h3>
+        <h3>${products[0].name}</h3>
+        <p>پارچه: ${products[0].fabric}</p>
+        <p>${products[0].size}</p>
+        <p>${products[0].colors}</p>
+        <h3>${products[0].price.toLocaleString("fa-IR")} تومان</h3>
+        <p>قیمت عالی، اقتصادی و استثنایی</p>
 
-        <p>پارچه: ${product.fabric}</p>
-        <p>${product.size}</p>
-        <p>${product.colors}</p>
-
-        <strong class="product-price">
-          ${product.price.toLocaleString("fa-IR")} تومان
-        </strong>
-
-        <p>${product.description}</p>
-
-        <button class="btn primary"
-                onclick="addToCart(${product.id})">
+        <button class="btn primary" onclick="addToCart(1)">
           افزودن به سبد خرید
         </button>
       </div>
     </article>
-  `).join("");
+  `;
 }
 
 function addToCart(id) {
@@ -63,12 +46,11 @@ function addToCart(id) {
     cart.push(product);
 
     const cartCount = document.getElementById("cartCount");
-
     if (cartCount) {
       cartCount.textContent = cart.length;
     }
 
-    alert(product.name + " به سبد خرید اضافه شد");
+    alert("محصول به سبد خرید اضافه شد");
   }
 }
 
@@ -77,5 +59,3 @@ const year = document.getElementById("year");
 if (year) {
   year.textContent = new Date().getFullYear();
 }
-
-renderProducts();
